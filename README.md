@@ -28,7 +28,7 @@ POSTGRES_PASSWORD=postgres
 ```
 
 #### `init.sql`
-```
+```sql
 -- Create users database
 CREATE DATABASE users;
 
@@ -75,4 +75,4 @@ env $(cat .env) go run ./...
 ```
 
 Use Postman as client
-![Postman output](https://github.com/oyaro-tech/auth/example/postman-output.png)
+![Postman output](https://github.com/oyaro-tech/auth/blob/main/example/postman-output.png)
