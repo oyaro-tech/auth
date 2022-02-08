@@ -1,5 +1,5 @@
 # auth
-GIN JWT authentication stored in cookies
+GIN JWT authentication with token stored in cookies
 
 ## Usage example
 
