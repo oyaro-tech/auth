@@ -79,20 +79,20 @@ values (
 ```
 
 Run Postgres in Docker and init database
-```
+```bash
 docker run --name postgres -e POSTGRES_PASSWORD=postgres -d -p 5432:5432 --rm postgres
 cat init.sql | sudo docker exec -i postgres psql -U postgres
 ```
 
 Init package and install requirements
-```
+```bash
 go mod init github.com/$USER/auth-example
 go mod tidy
 go get
 ```
 
 Running example
-```
+```bash
 env $(cat .env) go run ./...
 ```
 
