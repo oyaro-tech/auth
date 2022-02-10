@@ -8,13 +8,35 @@ GIN JWT authentication with token stored in cookies
 package main
 
 import (
+	"net/http"
+	"time"
+
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/oyaro-tech/auth"
 )
 
 func main() {
-	router := gin.Default()
+	router := gin.New()
+
+	_ = router.SetTrustedProxies(nil)
+	router.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"*"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "UPDATE", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Accept", "Content-Type", "X-CSRF-Token", "X-Requested-With"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
+	}))
+	router.Use(gin.LoggerWithConfig(gin.LoggerConfig{
+		SkipPaths: []string{"/favicon.ico"},
+	}))
+	router.Use(gin.Recovery())
+
 	auth.RegisterRoutes(router)
+	router.GET("/welcome", auth.TokenAuthMiddleware, func(c *gin.Context) {
+		c.JSON(http.StatusAccepted, "Welcome admin!")
+	})
 	router.Run()
 }
 ```
@@ -29,13 +51,13 @@ POSTGRES_PASSWORD=postgres
 
 #### `init.sql`
 ```sql
--- Create users database
+-- Create database
 CREATE DATABASE users;
 
 -- Create user role enum
 create type user_role as enum ('user', 'administrator');
 
--- Creation of users table
+-- Create users table
 create table if not exists users (
     id SERIAL NOT NULL,
     privileges user_role DEFAULT 'user',
@@ -46,7 +68,7 @@ create table if not exists users (
     PRIMARY KEY (id)
 );
 
--- Insert test users
+-- Insert test user
 insert into users (privileges, email, username, password)
 values (
     'administrator',
@@ -74,5 +96,7 @@ Running example
 env $(cat .env) go run ./...
 ```
 
-Use Postman as client
-![Postman output](https://github.com/oyaro-tech/auth/blob/main/example/postman-output.png)
+### Use Postman as client
+![Postman not_sing_in](https://github.com/oyaro-tech/auth/blob/main/example/not_sing_in.png)
+![Postman login](https://github.com/oyaro-tech/auth/blob/main/example/login.png)
+![Postman access_granted](https://github.com/oyaro-tech/auth/blob/main/example/access_granted.png)
