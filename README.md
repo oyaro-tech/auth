@@ -100,3 +100,6 @@ env $(cat .env) go run ./...
 ![Postman not_sing_in](https://github.com/oyaro-tech/auth/blob/main/example/not_sing_in.png)
 ![Postman login](https://github.com/oyaro-tech/auth/blob/main/example/login.png)
 ![Postman access_granted](https://github.com/oyaro-tech/auth/blob/main/example/access_granted.png)
+
+## TODO
+- [ ] Create middleware for user with administrator privileges
