@@ -103,4 +103,4 @@ env $(cat .env) go run ./...
 
 ## TODO
 - [ ] Create middleware for user with administrator privileges
-- [ ] Generate ACCESS_SECRET on init if not exists in _.env_
+- [x] Generate ACCESS_SECRET on init
