@@ -8,6 +8,7 @@ import (
 	"os"
 	"regexp"
 	"strconv"
+	"time"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
@@ -36,15 +37,17 @@ func init() {
 		log.Fatalf("Can't connect to database: %s\n", err.Error())
 	}
 
-	os.Setenv("ACCESS_SECRET", generateAccessSecret(16))
+	os.Setenv("ACCESS_SECRET", generateAccessSecret(32))
 }
 
 func generateAccessSecret(length int) string {
 	var characters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
 
+	random := rand.New(rand.NewSource(time.Now().UnixNano()))
+
 	secret := make([]rune, length)
 	for i := range secret {
-		secret[i] = characters[rand.Intn(len(characters))]
+		secret[i] = characters[random.Intn(len(characters))]
 	}
 
 	return string(secret)
