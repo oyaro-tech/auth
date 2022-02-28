@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"math/rand"
 	"os"
 	"regexp"
 	"strconv"
@@ -35,7 +36,18 @@ func init() {
 		log.Fatalf("Can't connect to database: %s\n", err.Error())
 	}
 
-	os.Setenv("ACCESS_SECRET", "U5kBnGsmHW1Bchegg7bi8fFvfdqxSAuk")
+	os.Setenv("ACCESS_SECRET", generateAccessSecret(16))
+}
+
+func generateAccessSecret(length int) string {
+	var characters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+
+	secret := make([]rune, length)
+	for i := range secret {
+		secret[i] = characters[rand.Intn(len(characters))]
+	}
+
+	return string(secret)
 }
 
 func createToken(userid uint64) (*TokenDetails, error) {
