@@ -147,7 +147,7 @@ Note: Unnecessary use of -X or --request, POST is already inferred.
 < Content-Length: 36
 < 
 * Connection #0 to host localhost left intact
-"Please provide valid login details"
+"please provide valid login details"
 ```
 
 ### Login with valid credentials
