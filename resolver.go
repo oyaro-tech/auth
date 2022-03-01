@@ -14,8 +14,8 @@ func Login(c *gin.Context) {
 	err := c.ShouldBindJSON(&u)
 	switch {
 	case err == io.EOF:
-		c.JSON(http.StatusBadRequest, "Please send a request body")
-		log.Println("Empty request body")
+		c.JSON(http.StatusBadRequest, "please send a request body")
+		log.Println("empty request body")
 		return
 	case err != nil:
 		c.JSON(http.StatusUnprocessableEntity, err.Error())
@@ -27,8 +27,8 @@ func Login(c *gin.Context) {
 
 	//compare the user from the request, with the one we defined:
 	if !comparePasswords(u.Password, user.Password) {
-		c.JSON(http.StatusUnauthorized, "Please provide valid login details")
-		log.Println("Wrong credentials")
+		c.JSON(http.StatusUnauthorized, "please provide valid login details")
+		log.Println("wrong credentials")
 		return
 	}
 
@@ -51,12 +51,12 @@ func Login(c *gin.Context) {
 func Logout(c *gin.Context) {
 	_, err := ExtractTokenMetadata(c)
 	if err != nil {
-		c.JSON(http.StatusUnauthorized, "Unauthorized")
+		c.JSON(http.StatusUnauthorized, "unauthorized")
 		return
 	}
 
 	c.SetCookie("access_token", "", -1, "/", "", true, true)
-	c.JSON(http.StatusOK, "Successfully logged out")
+	c.JSON(http.StatusOK, "successfully logged out")
 }
 
 func Register(c *gin.Context) {
@@ -64,20 +64,20 @@ func Register(c *gin.Context) {
 
 	err := c.BindJSON(&user)
 	if err != nil {
-		log.Printf("Singup: %s\n", err.Error())
+		log.Printf("register: %s\n", err.Error())
 		c.JSON(http.StatusUnprocessableEntity, err.Error())
 		return
 	}
 
 	if !validUsername(user.Username) {
-		log.Printf("Singup: invalid username: %s\n", user.Username)
-		c.JSON(http.StatusUnprocessableEntity, "Invalid username!")
+		log.Printf("register: invalid username: %s\n", user.Username)
+		c.JSON(http.StatusUnprocessableEntity, "invalid username")
 		return
 	}
 
 	status, err := checkUsernameExists(user.Username)
 	if err != nil {
-		log.Printf("Singup: %s\n", err.Error())
+		log.Printf("register: %s\n", err.Error())
 		c.JSON(http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -85,20 +85,20 @@ func Register(c *gin.Context) {
 	if status {
 		c.JSON(
 			http.StatusUnprocessableEntity,
-			fmt.Sprintf("Username %s exists!", user.Username),
+			fmt.Sprintf("username %s exists!", user.Username),
 		)
 		return
 	}
 
 	if !validEmail(user.Email) {
-		log.Printf("Singup: invalid email: %s\n", user.Email)
-		c.JSON(http.StatusUnprocessableEntity, "Invalid email!")
+		log.Printf("register: invalid email: %s\n", user.Email)
+		c.JSON(http.StatusUnprocessableEntity, "invalid email")
 		return
 	}
 
 	status, err = checkEmailExists(user.Email)
 	if err != nil {
-		log.Printf("Singup: %s\n", err.Error())
+		log.Printf("register: %s\n", err.Error())
 		c.JSON(http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -106,20 +106,20 @@ func Register(c *gin.Context) {
 	if status {
 		c.JSON(
 			http.StatusUnprocessableEntity,
-			fmt.Sprintf("Email %s exists!", user.Email),
+			fmt.Sprintf("email %s exists!", user.Email),
 		)
 		return
 	}
 
 	if !validPassword(user.Password) {
-		log.Printf("Singup: invalid password: %s\n", user.Password)
-		c.JSON(http.StatusUnprocessableEntity, "Invalid password!")
+		log.Printf("register: invalid password: %s\n", user.Password)
+		c.JSON(http.StatusUnprocessableEntity, "invalid password!")
 		return
 	}
 
 	err = createUser(user)
 	if err != nil {
-		log.Printf("Singup: createUser: %s\n", err.Error())
+		log.Printf("register: createUser: %s\n", err.Error())
 		c.JSON(http.StatusInternalServerError, err.Error())
 		return
 	}
