@@ -101,6 +101,9 @@ env $(cat .env) go run ./...
 ### Try accessing the `/welcome` endpoint
 ```
 curl -v localhost:8080/welcome -X GET
+```
+
+```
 Note: Unnecessary use of -X or --request, GET is already inferred.
 *   Trying 127.0.0.1:8080...
 * Connected to localhost (127.0.0.1) port 8080 (#0)
@@ -123,6 +126,9 @@ Note: Unnecessary use of -X or --request, GET is already inferred.
 ### Login with invalid credentials
 ```
 curl -v localhost:8080/login -X POST -H "Content-Type: application/json" -d '{"username": "admin", "password": "admin"}' 
+```
+
+```
 Note: Unnecessary use of -X or --request, POST is already inferred.
 *   Trying 127.0.0.1:8080...
 * Connected to localhost (127.0.0.1) port 8080 (#0)
@@ -147,6 +153,9 @@ Note: Unnecessary use of -X or --request, POST is already inferred.
 ### Login with valid credentials
 ```
 curl -v localhost:8080/login -X POST -H "Content-Type: application/json" -d '{"username": "admin", "password": "qwerty123"}'
+```
+
+```
 Note: Unnecessary use of -X or --request, POST is already inferred.
 *   Trying 127.0.0.1:8080...
 * Connected to localhost (127.0.0.1) port 8080 (#0)
@@ -169,6 +178,9 @@ Note: Unnecessary use of -X or --request, POST is already inferred.
 ### Try accessing the `/welcome` endpoint with invalid jwt token in cookies
 ```
 curl -v localhost:8080/welcome -b "access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxfQ.Fzb932Uj1qCIvi4ggTFMG634mJ-T63lan_G-1tRi9Ek; Path=/; Max-Age=43200; HttpOnly; Secure"
+```
+
+```
 *   Trying 127.0.0.1:8080...
 * Connected to localhost (127.0.0.1) port 8080 (#0)
 > GET /welcome HTTP/1.1
@@ -191,6 +203,9 @@ curl -v localhost:8080/welcome -b "access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpX
 ### Try accessing the `/welcome` endpoint with valid jwt token in cookies
 ```
 curl -v localhost:8080/welcome -X GET -b "access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxfQ.tJMQeyTTqaFkHbzImAyYcGRzlJYwA04tKZ61OZ3lKqg; Path=/; Max-Age=43200; HttpOnly; Secure"
+```
+
+```
 Note: Unnecessary use of -X or --request, GET is already inferred.
 *   Trying 127.0.0.1:8080...
 * Connected to localhost (127.0.0.1) port 8080 (#0)
