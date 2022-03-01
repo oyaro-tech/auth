@@ -173,6 +173,7 @@ Note: Unnecessary use of -X or --request, POST is already inferred.
 < Date: Tue, 01 Mar 2022 09:31:40 GMT
 < Content-Length: 0
 <
+* Connection #0 to host localhost left intact
 ```
 
 ### Try accessing the `/welcome` endpoint with invalid jwt token in cookies
@@ -226,5 +227,5 @@ Note: Unnecessary use of -X or --request, GET is already inferred.
 ```
 
 ## TODO
-- [ ] Create middleware for user with administrator privileges
 - [x] Generate ACCESS_SECRET on init
+- [ ] Create middleware for user with administrator privileges
