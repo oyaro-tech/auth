@@ -49,14 +49,8 @@ func Login(c *gin.Context) {
 }
 
 func Logout(c *gin.Context) {
-	_, err := ExtractTokenMetadata(c)
-	if err != nil {
-		c.JSON(http.StatusUnauthorized, "unauthorized")
-		return
-	}
-
 	c.SetCookie("access_token", "", -1, "/", "", true, true)
-	c.JSON(http.StatusOK, "successfully logged out")
+	c.JSON(http.StatusUnauthorized, "unauthorized")
 }
 
 func Register(c *gin.Context) {
