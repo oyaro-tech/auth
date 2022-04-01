@@ -5,6 +5,6 @@ import (
 )
 
 func RegisterRoutes(c *gin.Engine) {
-	c.POST("/login", Login)
-	c.POST("/logout", TokenAuthMiddleware, Logout)
+	c.POST("/auth/login", Login)
+	c.POST("/auth/logout", Logout)
 }
