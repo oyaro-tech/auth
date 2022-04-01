@@ -12,5 +12,6 @@ type TokenDetails struct {
 }
 
 type AccessDetails struct {
-	UserId uint64
+	UserId   uint64
+	Username string
 }
