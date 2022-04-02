@@ -35,7 +35,7 @@ func main() {
 
 	auth.RegisterRoutes(router)
 	router.GET("/welcome", auth.TokenAuthMiddleware, func(c *gin.Context) {
-		c.JSON(http.StatusAccepted, "Welcome admin!")
+		c.JSON(http.StatusAccepted, "Welcome user!")
 	})
 	router.Run()
 }
@@ -54,13 +54,9 @@ POSTGRES_PASSWORD=postgres
 -- Create database
 CREATE DATABASE users;
 
--- Create user role enum
-create type user_role as enum ('user', 'administrator');
-
 -- Create users table
 create table if not exists users (
     id SERIAL NOT NULL,
-    privileges user_role DEFAULT 'user',
     email varchar(1024) NOT NULL,
     username varchar(64) NOT NULL,
     password varchar(64) NOT NULL,
@@ -69,9 +65,8 @@ create table if not exists users (
 );
 
 -- Insert test user
-insert into users (privileges, email, username, password)
+insert into users (email, username, password)
 values (
-    'administrator',
     'example@gmail.com',
     'admin',
     '$2a$10$.lWUct/xzfsd8OccI/Fn0ue8aiDMmU/HCffzOTcD8KwsNlldHkOE6' -- qwerty123
@@ -125,14 +120,14 @@ Note: Unnecessary use of -X or --request, GET is already inferred.
 
 ### Login with invalid credentials
 ```
-curl -v localhost:8080/login -X POST -H "Content-Type: application/json" -d '{"username": "admin", "password": "admin"}' 
+curl -v localhost:8080/auth/login -X POST -H "Content-Type: application/json" -d '{"username": "admin", "password": "admin"}' 
 ```
 
 ```
 Note: Unnecessary use of -X or --request, POST is already inferred.
 *   Trying 127.0.0.1:8080...
 * Connected to localhost (127.0.0.1) port 8080 (#0)
-> POST /login HTTP/1.1
+> POST /auth/login HTTP/1.1
 > Host: localhost:8080
 > User-Agent: curl/7.74.0
 > Accept: */*
@@ -152,14 +147,14 @@ Note: Unnecessary use of -X or --request, POST is already inferred.
 
 ### Login with valid credentials
 ```
-curl -v localhost:8080/login -X POST -H "Content-Type: application/json" -d '{"username": "admin", "password": "qwerty123"}'
+curl -v localhost:8080/auth/login -X POST -H "Content-Type: application/json" -d '{"username": "admin", "password": "qwerty123"}'
 ```
 
 ```
 Note: Unnecessary use of -X or --request, POST is already inferred.
 *   Trying 127.0.0.1:8080...
 * Connected to localhost (127.0.0.1) port 8080 (#0)
-> POST /login HTTP/1.1
+> POST /auth/login HTTP/1.1
 > Host: localhost:8080
 > User-Agent: curl/7.74.0
 > Accept: */*
@@ -223,9 +218,4 @@ Note: Unnecessary use of -X or --request, GET is already inferred.
 < Content-Length: 16
 < 
 * Connection #0 to host localhost left intact
-"Welcome admin!"
-```
-
-## TODO
-- [x] Generate ACCESS_SECRET on init
-- [ ] Create middleware for user with administrator privileges
+"Welcome user!"

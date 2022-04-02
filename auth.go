@@ -124,7 +124,8 @@ func ExtractTokenMetadata(c *gin.Context) (*AccessDetails, error) {
 		}
 
 		return &AccessDetails{
-			UserId: userId,
+			UserId:   userId,
+			Username: fmt.Sprintf("%s", claims["username"]),
 		}, nil
 	}
 	return nil, err
