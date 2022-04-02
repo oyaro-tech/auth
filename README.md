@@ -120,14 +120,14 @@ Note: Unnecessary use of -X or --request, GET is already inferred.
 
 ### Login with invalid credentials
 ```
-curl -v localhost:8080/login -X POST -H "Content-Type: application/json" -d '{"username": "admin", "password": "admin"}' 
+curl -v localhost:8080/auth/login -X POST -H "Content-Type: application/json" -d '{"username": "admin", "password": "admin"}' 
 ```
 
 ```
 Note: Unnecessary use of -X or --request, POST is already inferred.
 *   Trying 127.0.0.1:8080...
 * Connected to localhost (127.0.0.1) port 8080 (#0)
-> POST /login HTTP/1.1
+> POST /auth/login HTTP/1.1
 > Host: localhost:8080
 > User-Agent: curl/7.74.0
 > Accept: */*
@@ -147,14 +147,14 @@ Note: Unnecessary use of -X or --request, POST is already inferred.
 
 ### Login with valid credentials
 ```
-curl -v localhost:8080/login -X POST -H "Content-Type: application/json" -d '{"username": "admin", "password": "qwerty123"}'
+curl -v localhost:8080/auth/login -X POST -H "Content-Type: application/json" -d '{"username": "admin", "password": "qwerty123"}'
 ```
 
 ```
 Note: Unnecessary use of -X or --request, POST is already inferred.
 *   Trying 127.0.0.1:8080...
 * Connected to localhost (127.0.0.1) port 8080 (#0)
-> POST /login HTTP/1.1
+> POST /auth/login HTTP/1.1
 > Host: localhost:8080
 > User-Agent: curl/7.74.0
 > Accept: */*
